@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="64" tileheight="64" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" name="tilesetOpenGameBackground_1.redimensionada" tilewidth="64" tileheight="64" tilecount="99" columns="11">
+  <image source="../tilesets/tilesetOpenGameBackground_1.redimensionada.png" width="750" height="600"/>
+ </tileset>
+ <tileset firstgid="100" name="tilesetOpenGameBackground_1.redimensionada" tilewidth="64" tileheight="64" tilecount="88" columns="11">
+  <image source="../tilesets/tilesetOpenGameBackground_1.redimensionada.png" width="704" height="563"/>
+ </tileset>
+ <tileset firstgid="188" name="a" tilewidth="64" tileheight="64" tilecount="88" columns="11">
+  <image source="../tilesets/a.png" width="704" height="563"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="20" height="10">
+  <data encoding="csv">
+188,189,190,191,192,193,194,195,196,188,189,190,191,192,193,194,195,196,197,198,
+199,200,201,202,203,204,205,206,207,199,200,201,202,203,204,205,206,207,208,209,
+188,189,190,191,192,193,194,195,196,188,189,190,191,192,193,194,195,196,197,198,
+199,200,201,202,203,204,205,206,207,199,200,201,202,203,204,205,206,207,208,209,
+210,211,212,213,214,215,216,217,218,219,220,210,211,212,213,214,215,216,217,218,
+221,222,223,224,225,226,227,228,229,230,231,221,222,223,224,225,226,227,228,229,
+232,233,234,235,236,237,238,239,240,241,242,232,233,234,235,236,237,238,239,240,
+243,244,245,246,247,248,249,250,251,252,253,243,244,245,246,247,248,249,250,251,
+254,255,256,257,258,259,260,261,262,263,264,254,255,256,257,258,259,260,261,262,
+265,266,267,268,269,270,271,272,273,274,275,265,266,267,268,269,270,271,272,273
+</data>
+ </layer>
+</map>
