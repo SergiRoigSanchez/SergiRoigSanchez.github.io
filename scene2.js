@@ -13,7 +13,6 @@ class Scene2 extends Phaser.Scene {
   infoText;
 
   sfx_game_over;
-  sfx_victory;
   sfx_coin;
   sfx_hit;
   sfx_jump;
@@ -33,9 +32,8 @@ class Scene2 extends Phaser.Scene {
     this.load.image('diamond', 'assets/images/diamond.png');
     this.load.atlas('player', 'assets/images/kenney_player.png','assets/images/kenney_player_atlas.json');
     this.load.image('tiles', 'assets/tilesets/platformPack_tilesheet.png');
-    this.load.tilemapTiledJSON('map2', 'assets/tilemaps/level2-4.json');
+    this.load.tilemapTiledJSON('map2', 'assets/tilemaps/level2.json');
     this.load.audio('game_over', 'assets/sfx/game_over.wav');
-    this.load.audio('victory', 'assets/sfx/victory.wav');
     this.load.audio('coin', 'assets/sfx/coin.wav');
     this.load.audio('hit', 'assets/sfx/hit.wav');
     this.load.audio('jump', 'assets/sfx/jump2.wav');
@@ -67,7 +65,6 @@ class Scene2 extends Phaser.Scene {
     this.infoText = this.add.text(300, 20, this.info, { fontSize: '26px', fill: '#000' }).setScrollFactor(0);
 
     this.sfx_game_over = this.sound.add('game_over', {volume: 0.20});
-    this.sfx_victory = this.sound.add('victory', {volume: 0.20});
     this.sfx_coin = this.sound.add('coin', {volume: 0.10});
     this.sfx_hit = this.sound.add('hit', {volume: 0.20});
     this.sfx_jump = this.sound.add('jump', {volume: 0.10});
@@ -122,7 +119,7 @@ class Scene2 extends Phaser.Scene {
       immovable: true
     });
 
-    this.blue_blocks = this.physics.add.group({
+    this.blue_blocks2 = this.physics.add.group({
       allowGravity: false,
       immovable: true
     });
@@ -164,9 +161,9 @@ class Scene2 extends Phaser.Scene {
 
     var blue_blockObjects = map2.getObjectLayer('BlueBlocks')['objects'];
     blue_blockObjects.forEach(blue_blockObject => {
-      var blue_block = this.blue_blocks.create(blue_blockObject.x, blue_blockObject.y - blue_blockObject.height, 'blue_block').setOrigin(0, 0);
+      var blue_block = this.blue_blocks2.create(blue_blockObject.x, blue_blockObject.y - blue_blockObject.height, 'blue_block').setOrigin(0, 0);
     });
-    this.physics.add.collider(this.player, this.blue_blocks, this.blueBlockHit, null, this);
+    this.physics.add.collider(this.player, this.blue_blocks2, this.blueBlockHit, null, this);
 
     var diamondObjects = map2.getObjectLayer('Diamonds')['objects'];
     diamondObjects.forEach(diamondObject => {
@@ -209,12 +206,12 @@ class Scene2 extends Phaser.Scene {
 
   update() {
     if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-350);
+      this.player.setVelocityX(-250);
       if (this.player.body.onFloor()) {
         this.player.play('walk', true);
       }
     } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(350);
+      this.player.setVelocityX(250);
       if (this.player.body.onFloor()) {
         this.player.play('walk', true);
       }
@@ -227,7 +224,7 @@ class Scene2 extends Phaser.Scene {
 
     if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.player.body.onFloor()) {
       this.sfx_jump.play()
-      this.player.setVelocityY(-750);
+      this.player.setVelocityY(-600);
       this.player.play('jump', true);
     }
 
@@ -300,8 +297,8 @@ class Scene2 extends Phaser.Scene {
     this.score += 1;
     this.scoreText.setText('Diamonds: ' + this.score + ' / 16');
 
-    if (this.score >= 7){
-      this.blue_blocks.clear();
+    if (this.score >= 16){
+      this.blue_blocks2.clear(true);
     }
   }
 
@@ -322,7 +319,6 @@ class Scene2 extends Phaser.Scene {
       this.info = 'Victory!';
       this.infoText.setText(this.info);
       this.song2.stop()
-      this.sfx_victory.play();
       this.scene.start("scene3");
       this.resetValues();
     } else {

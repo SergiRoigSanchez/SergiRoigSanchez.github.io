@@ -34,7 +34,7 @@ class Scene3 extends Phaser.Scene {
     this.load.image('diamond', 'assets/images/diamond.png');
     this.load.atlas('player', 'assets/images/kenney_player.png','assets/images/kenney_player_atlas.json');
     this.load.image('tiles', 'assets/tilesets/platformPack_tilesheet.png');
-    this.load.tilemapTiledJSON('map3', 'assets/tilemaps/level3-9.json');
+    this.load.tilemapTiledJSON('map3', 'assets/tilemaps/level3-end.json');
     this.load.audio('game_over', 'assets/sfx/game_over.wav');
     this.load.audio('victory', 'assets/sfx/victory.wav');
     this.load.audio('coin', 'assets/sfx/coin.wav');
@@ -63,7 +63,7 @@ class Scene3 extends Phaser.Scene {
     this.cameras.main.startFollow(this.player);
 
     this.livesText = this.add.text(20, 20, 'Lives: ' + this.lives, { fontSize: '26px', fill: '#000' }).setScrollFactor(0);
-    this.scoreText = this.add.text(20, 60, 'Diamonds: ' + this.score + ' / 8', { fontSize: '26px', fill: '#000' }).setScrollFactor(0);
+    this.scoreText = this.add.text(20, 60, 'Diamonds: ' + this.score + ' / 9', { fontSize: '26px', fill: '#000' }).setScrollFactor(0);
     this.keysText = this.add.text(20, 100, 'Keys: ' + this.keys, { fontSize: '26px', fill: '#000' }).setScrollFactor(0);
     this.infoText = this.add.text(300, 20, this.info, { fontSize: '26px', fill: '#000' }).setScrollFactor(0);
 
@@ -128,7 +128,7 @@ class Scene3 extends Phaser.Scene {
       immovable: true
     });
 
-    this.blue_blocks = this.physics.add.group({
+    this.blue_blocks3 = this.physics.add.group({
       allowGravity: false,
       immovable: true
     });
@@ -176,9 +176,9 @@ class Scene3 extends Phaser.Scene {
 
     var blue_blockObjects = map3.getObjectLayer('BlueBlocks')['objects'];
     blue_blockObjects.forEach(blue_blockObject => {
-      var blue_block = this.blue_blocks.create(blue_blockObject.x, blue_blockObject.y - blue_blockObject.height, 'blue_block').setOrigin(0, 0);
+      var blue_block = this.blue_blocks3.create(blue_blockObject.x, blue_blockObject.y - blue_blockObject.height, 'blue_block').setOrigin(0, 0);
     });
-    this.physics.add.collider(this.player, this.blue_blocks, this.blueBlockHit, null, this);
+    this.physics.add.collider(this.player, this.blue_blocks3, this.blueBlockHit, null, this);
 
     var diamondObjects = map3.getObjectLayer('Diamonds')['objects'];
     diamondObjects.forEach(diamondObject => {
@@ -221,12 +221,12 @@ class Scene3 extends Phaser.Scene {
 
   update() {
     if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-350);
+      this.player.setVelocityX(-250);
       if (this.player.body.onFloor()) {
         this.player.play('walk', true);
       }
     } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(350);
+      this.player.setVelocityX(250);
       if (this.player.body.onFloor()) {
         this.player.play('walk', true);
       }
@@ -238,7 +238,7 @@ class Scene3 extends Phaser.Scene {
     }
 
     if ((this.cursors.space.isDown || this.cursors.up.isDown) && this.player.body.onFloor()) {
-      this.player.setVelocityY(-750);
+      this.player.setVelocityY(-600);
       this.player.play('jump', true);
     }
 
@@ -309,10 +309,10 @@ class Scene3 extends Phaser.Scene {
     diamond.disableBody(true, true);
 
     this.score += 1;
-    this.scoreText.setText('Diamonds: ' + this.score + ' / 8');
+    this.scoreText.setText('Diamonds: ' + this.score + ' / 9');
 
-    if (this.score >= 7){
-      this.blue_blocks.clear();
+    if (this.score >= 9){
+      this.blue_blocks3.clear(true);
     }
   }
 
@@ -368,14 +368,17 @@ class Scene3 extends Phaser.Scene {
   {
     this.player.setVelocityY(100);
     if (this.cursors.up.isDown) {
-      this.player.setVelocityY(-600);
+      this.player.setVelocityY(-500);
+    }
+    if (this.cursors.down.isDown) {
+      this.player.setVelocityY(200);
     }
   }
 
   blueBlockHit (player, blue_block)
   {
-    if (this.score < 8){
-      this.info = 'You need 8 diamonds.'
+    if (this.score < 9){
+      this.info = 'You need 9 diamonds.'
       this.infoText.setText(this.info);
     }
   }
